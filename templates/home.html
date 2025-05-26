@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+  <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center;">
+    <h2 style="margin-bottom: 10px; color: #333; font-size: 28px;">Welcome to Omnipredict!</h2>
+    <p style="color: #666; margin-bottom: 30px;">Omnipredict Portal</p>
+
+    <form method="POST" action="{% url 'login' %}" style="text-align: left;">
+      {% csrf_token %}
+      <div style="margin-bottom: 20px;">
+        <input type="text" name="username" placeholder="Username" required
+               style="padding: 12px; width: 100%; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box;">
+      </div>
+      <div style="margin-bottom: 30px;">
+        <input type="password" name="password" placeholder="Password" required
+               style="padding: 12px; width: 100%; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box;">
+      </div>
+      <div style="text-align: center;">
+        <button type="submit" style="background: #007bff; color: white; border: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; cursor: pointer; width: 100%;">
+          Log in
+        </button>
+      </div>
+    </form>
+
+    <div style="margin-top: 20px;">
+      <a href="{% url 'signup' %}" style="color: #007bff; text-decoration: none; font-size: 16px;">
+        Don't have an account? Sign up
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

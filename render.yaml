@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: omnipredict
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn omnipredict_ide.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: omnipredict_ide.settings
+      - key: SECRET_KEY
+        value: '***REMOVED***'

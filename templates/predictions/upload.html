@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
+  <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center;">
+    <h2 style="margin-bottom: 10px; color: #333; font-size: 28px;">Welcome to the</h2>
+    <h2 style="margin-bottom: 30px; color: #333; font-size: 28px;">Omnipredict Portal</h2>
+
+    {% if user.is_superuser %}
+      <div style="margin-bottom: 30px;">
+        <a href="/admin/" style="background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; display: inline-block; font-weight: 500; box-shadow: 0 2px 8px rgba(108, 92, 231, 0.3); transition: transform 0.2s;">
+          🔧 Go to Admin Panel
+        </a>
+      </div>
+    {% endif %}
+
+    <h3 style="color: #333; margin-bottom: 20px; font-size: 20px;">Upload Medical Data</h3>
+    
+    <form method="post" enctype="multipart/form-data" style="margin-bottom: 30px;">
+      {% csrf_token %}
+      <div style="margin-bottom: 20px; text-align: left;">
+        <label style="display: block; margin-bottom: 8px; color: #555; font-weight: 500;">Data file:</label>
+        <input type="file" name="data_file" accept=".csv,.xlsx,.xls" required
+               style="padding: 10px; width: 100%; border: 2px solid #ddd; border-radius: 6px; font-size: 16px; box-sizing: border-box; background: #fafafa;">
+      </div>
+      <button type="submit" style="background: #007bff; color: white; border: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; cursor: pointer; width: 100%; font-weight: 500; box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);">
+        📊 Predict
+      </button>
+    </form>
+
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" style="background: #dc3545; color: white; border: none; padding: 12px 30px; border-radius: 6px; font-size: 16px; cursor: pointer; width: 100%; font-weight: 500; box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);">
+        🚪 Log out
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
