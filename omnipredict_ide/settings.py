@@ -25,7 +25,7 @@ SECRET_KEY = '***REMOVED***'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['omnipredict.onrender.com']
+ALLOWED_HOSTS = ['omnipredict-ide.onrender.com']
 
 
 # Application definition
