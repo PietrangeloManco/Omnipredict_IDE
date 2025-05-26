@@ -24,7 +24,7 @@ def upload_and_predict(request):
 
             # 3) run the model
             proba = CLASSIFIER.predict_proba(features)[0, 1]
-            label = "sarcopenic" if proba > 0.5 else "normal"
+            label = "Sarcopenic" if proba > 0.5 else "Normal"
 
             # 4) save result
             obj.result = label

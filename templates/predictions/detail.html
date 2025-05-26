@@ -2,12 +2,12 @@
 {% block content %}
 <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
   <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center;">
-    <h2 style="margin-bottom: 30px; color: #333; font-size: 28px;">📈 Prediction Result</h2>
+    <h2 style="margin-bottom: 30px; color: #333; font-size: 28px;">Prediction Result</h2>
 
     <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 30px; border-left: 5px solid #007bff;">
       <div style="margin-bottom: 20px;">
         <label style="display: block; color: #666; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Status</label>
-        <span style="font-size: 24px; font-weight: bold; color: {% if p.result == 'Positive' or 'High' in p.result %}#dc3545{% elif p.result == 'Negative' or 'Low' in p.result %}#28a745{% else %}#ffc107{% endif %};">
+        <span style="font-size: 24px; font-weight: bold;">
           {{ p.result }}
         </span>
       </div>
@@ -29,11 +29,11 @@
     </div>
 
     <div style="display: flex; gap: 15px; justify-content: center;">
-      <a href="{% url 'upload' %}" style="background: #007bff; color: white; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; font-weight: 500; box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3); transition: transform 0.2s;">
-        🔄 Analyze Another File
+      <a href="{% url 'upload' %}" style="background: #223166; color: white; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; font-weight: 500; box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3); transition: transform 0.2s;">
+        Analyze Another File
       </a>
       <button onclick="window.print()" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: 500; box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);">
-        🖨️ Print Result
+        Print Result
       </button>
     </div>
   </div>

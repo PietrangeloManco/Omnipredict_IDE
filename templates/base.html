@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+{% load static %}
 <head>
     <title>Omnipredict</title>
     <style>
@@ -7,7 +8,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
+            background-color: #223166;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -15,10 +16,20 @@
 
         header {
             background: white;
-            padding: 20px;
+            padding: 10px 0 5px 0;  /* top padding reduced from 20px */
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
+        header img {
+            height: 150px; /* smaller logo height */
+            margin-bottom: 5px; /* reduced spacing below logo */
+            margin-top: 0; /* remove potential spacing above */
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
 
         header h1 {
             margin: 0;
@@ -68,13 +79,16 @@
             color: #666;
             font-size: 14px;
         }
+
+
     </style>
 </head>
 <body>
     <header>
-        <h1>Omnipredict Portal</h1>
+        <img src="{% static 'images/Logo_oriz.svg' %}" alt="Omnipredict Logo">
         <hr>
     </header>
+
 
     <main>
         {% block content %}
