@@ -2,7 +2,9 @@ services:
   - type: web
     name: omnipredict
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
     startCommand: gunicorn omnipredict_ide.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE
