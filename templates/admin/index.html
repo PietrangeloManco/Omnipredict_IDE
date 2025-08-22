@@ -1,0 +1,10 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+  <p>
+    <a href="{% url 'admin-collected-data' %}" class="button default">
+      See collected data
+    </a>
+  </p>
+  {{ block.super }}
+{% endblock %}

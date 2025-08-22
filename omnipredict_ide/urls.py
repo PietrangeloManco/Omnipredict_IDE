@@ -17,13 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from predictions import views_admin
 from predictions.views import home
 
 urlpatterns = [
+    path("admin/collected-data/", admin.site.admin_view(views_admin.collected_data_view),
+                 name="admin-collected-data"),
     path("admin/", admin.site.urls),
     path("", home, name="home"),
     path("upload/", include("predictions.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
-    path("accounts/", include("accounts.urls")),
+    path("accounts/", include("accounts.urls"))
 ]
 
