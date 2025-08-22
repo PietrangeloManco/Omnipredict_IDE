@@ -49,15 +49,17 @@
 
 <div class="page">
 
-  <!-- TOP BUTTONS -->
+    <!-- TOP BUTTONS -->
   <div style="width:100%; display:flex; justify-content:flex-end; gap:10px; margin-bottom:20px;">
-    <a href="{% url 'admin:index' %}" class="btn">Go to Admin Panel</a>
+    {% if user.is_staff %}
+      <a href="{% url 'admin:index' %}" class="btn">Go to Admin Panel</a>
+    {% endif %}
     <form action="{% url 'logout' %}" method="post" style="display:inline;">
       {% csrf_token %}
       <button type="submit" class="btn logout">Logout</button>
     </form>
-
   </div>
+
 
   <!-- MANUAL -->
   <div class="card">
