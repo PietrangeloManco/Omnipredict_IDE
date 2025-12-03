@@ -112,8 +112,7 @@ def upload_and_predict(request):
                     messages.error(request, str(e))
                     return render(request, "predictions/upload.html", {
                         "form": upload_form,
-                        "manual_form": manual_form,
-                        "user": request.user
+                        "manual_form": manual_form
                     })
 
                 obj = PatientPrediction.objects.create(
@@ -151,8 +150,7 @@ def upload_and_predict(request):
 
     return render(request, "predictions/upload.html", {
         "form": upload_form,
-        "manual_form": manual_form,
-        "user": request.user
+        "manual_form": manual_form
     })
 
 @login_required

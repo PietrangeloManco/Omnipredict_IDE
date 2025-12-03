@@ -50,6 +50,7 @@
 <div class="page">
 
     <!-- TOP BUTTONS -->
+  <p>DEBUG: user={{ user }}, is_staff={{ user.is_staff }}, is_authenticated={{ user.is_authenticated }}</p>
   <div style="width:100%; display:flex; justify-content:flex-end; gap:10px; margin-bottom:20px;">
     {% if user.is_staff %}
       <a href="{% url 'admin:index' %}" class="btn">Go to Admin Panel</a>
