@@ -48,10 +48,13 @@
 </style>
 
 <!-- DEBUG outside of page div -->
+<p style="color: white; padding: 20px;">DEBUG</p>
 <p style="color: white; padding: 20px;">DEBUG: user={{ user }}, is_staff={{ user.is_staff }}, is_authenticated={{ user.is_authenticated }}</p>
 
 <div class="page">
+  <p style="color: white; padding: 20px;">DEBUG</p>
 
+  <p style="color: white; padding: 20px;">DEBUG: user={{ user }}, is_staff={{ user.is_staff }}, is_authenticated={{ user.is_authenticated }}</p>
   <!-- TOP BUTTONS -->
   <div style="width:100%; display:flex; justify-content:flex-end; gap:10px; margin-bottom:20px;">
     {% if user.is_staff %}
