@@ -52,16 +52,31 @@ DEMO_INPUT_COLUMNS = [
 
 
 def _align_raw_row(row_dict: dict) -> pd.DataFrame:
-    """Create a single-row DataFrame with all expected raw columns. Missing -> NaN."""
     row = {col: np.nan for col in RAW_FEATURE_COLUMNS}
-    # accept alias from form: Omega6_Omega3 -> Omega6/Omega3
-    if "Omega6_Omega3" in row_dict and "Omega6/Omega3" not in row_dict:
-        row_dict = {**row_dict, "Omega6/Omega3": row_dict["Omega6_Omega3"]}
-    row_dict.pop("Omega6_Omega3", None)
-    for k, v in row_dict.items():
-        if k in row and v not in (None, ""):
-            row[k] = v
+
+    # ----- Fix gender -----
+    g = row_dict.get("gender")
+    if g:
+        g = g.lower()
+        if g in ["m", "male"]:
+            row["gender"] = "male"
+        elif g in ["f", "female"]:
+            row["gender"] = "female"
+
+    # ----- Fix SNP normalisation -----
+    for snp in ["rs174537", "rs174626", "rs174579", "rs174593",
+                "rs526126", "rs953413"]:
+        if snp in row_dict and row_dict[snp]:
+            row[snp] = row_dict[snp].upper()
+
+    # ----- Map simple numeric fields -----
+    for field in ["bmi", "Hand_Grip", "Omega3_Index", "SCAT"]:
+        if field in row_dict and row_dict[field] not in ("", None):
+            row[field] = float(row_dict[field])
+
+    # ----- The rest stays NaN and is imputed by pipeline -----
     return pd.DataFrame([row])
+
 
 def _predict_with_pipeline_from_raw(row_dict: dict):
     df = _align_raw_row(row_dict)
