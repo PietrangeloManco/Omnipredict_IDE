@@ -97,6 +97,7 @@ def _predict_from_uploaded_file(file_obj, already_preprocessed: bool):
 
 @login_required
 def upload_and_predict(request):
+    print(f"DEBUG VIEW: user={request.user}, is_staff={request.user.is_staff}, is_authenticated={request.user.is_authenticated}")
     if request.method == "POST":
         # If a file field present or the checkbox posted, use the file path
         if request.FILES.get("data_file") or ("already_preprocessed" in request.POST):
