@@ -23,7 +23,7 @@ COLLECTED_DATA_CSV = os.path.join(BASE_DIR, "data", "Omnipredict_data.csv")
 SECRET_KEY = '***REMOVED***'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['omnipredict.it', 'www.omnipredict.it','omnipredict-ide.onrender.com', '127.0.0.1']
 
