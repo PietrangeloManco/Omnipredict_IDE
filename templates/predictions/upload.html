@@ -51,7 +51,7 @@
 
     <!-- TOP BUTTONS -->
   <div style="width:100%; display:flex; justify-content:flex-end; gap:10px; margin-bottom:20px;">
-    {% if user.is_superuser %}
+    {% if user.is_staff %}
       <a href="{% url 'admin:index' %}" class="btn">Go to Admin Panel</a>
     {% endif %}
     <form action="{% url 'logout' %}" method="post" style="display:inline;">
