@@ -67,7 +67,7 @@
   <div class="card">
     <h2>Predizione Manuale</h2>
     <p class="help">
-      Inserisci i valori sotto (solo numeri, <b>no units</b>). Lascia bianco se non li conosci;
+      Inserisci i valori sotto (solo numeri). Lascia bianco se non li conosci;
       i valori mancanti verranno inseriti tramite inferenza automatica.
       I genotipi (rs174537 / rs174626) accettano codici come <b>CC</b>, <b>CT</b>, <b>TT</b>.
     </p>
@@ -75,7 +75,7 @@
       {% csrf_token %}
       <input type="hidden" name="form_type" value="manual">
       <div class="form-grid">
-        <label>Gender</label>
+        <label>Genere</label>
         <select name="gender">
           <option value="">---</option>
           <option value="male">Maschio</option>

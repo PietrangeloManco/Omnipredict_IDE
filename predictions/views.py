@@ -81,7 +81,7 @@ def _align_raw_row(row_dict: dict) -> pd.DataFrame:
 def _predict_with_pipeline_from_raw(row_dict: dict):
     df = _align_raw_row(row_dict)
     proba = float(PIPE.predict_proba(df)[0, 1])
-    label = "Positive" if proba > 0.5 else "Negative"
+    label = "Positivo" if proba > 0.5 else "Negativo"
     return label, proba * 100.0
 
 def _predict_from_uploaded_file(file_obj, already_preprocessed: bool):

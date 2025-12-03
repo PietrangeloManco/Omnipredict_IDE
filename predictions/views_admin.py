@@ -42,7 +42,7 @@ def collected_data_view(request):
         return "?" + urlencode({"page": p, "per_page": per_page})
 
     return render(request, "admin/collected_data.html", {
-        "title": "Collected Data",
+        "title": "Dati Raccolti",
         "headers": headers,
         "rows": rows,
         "total": total,
