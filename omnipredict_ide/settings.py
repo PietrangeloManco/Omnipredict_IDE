@@ -41,9 +41,21 @@ INSTALLED_APPS = [
     'accounts'
 ]
 
+LANGUAGE_CODE = 'it'
+USE_I18N = True
+
+LANGUAGES = [
+    ('it', 'Italiano'),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

@@ -54,7 +54,7 @@
   <!-- TOP BUTTONS -->
   <div style="width:100%; display:flex; justify-content:flex-end; gap:10px; margin-bottom:20px;">
     {% if user.is_staff %}
-      <a href="{% url 'admin:index' %}" class="btn">Go to Admin Panel</a>
+      <a href="{% url 'admin:index' %}" class="btn">Vai al Pannello Admin</a>
     {% endif %}
     <form action="{% url 'logout' %}" method="post" style="display:inline;">
       {% csrf_token %}
@@ -65,11 +65,11 @@
 
   <!-- MANUAL -->
   <div class="card">
-    <h2>Manual Prediction</h2>
+    <h2>Predizione Manuale</h2>
     <p class="help">
-      Enter values below (numbers only, <b>no units</b>). Leave blank if unknown;
-      missing values will be imputed automatically.
-      Genotypes (rs174537 / rs174626) accept codes like <b>CC</b>, <b>CT</b>, <b>TT</b>.
+      Inserisci i valori sotto (solo numeri, <b>no units</b>). Lascia bianco se non li conosci;
+      i valori mancanti verranno inseriti tramite inferenza automatica.
+      I genotipi (rs174537 / rs174626) accettano codici come <b>CC</b>, <b>CT</b>, <b>TT</b>.
     </p>
     <form method="post">
       {% csrf_token %}
@@ -78,17 +78,17 @@
         <label>Gender</label>
         <select name="gender">
           <option value="">---</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="male">Maschio</option>
+          <option value="female">Femmina</option>
         </select>
 
         <label>BMI</label>
         <input type="number" name="bmi" step="0.01" placeholder="e.g. 24.5">
 
-        <label>Omega3 Index</label>
+        <label>Indice Omega3</label>
         <input type="number" name="Omega3_Index" step="0.01" placeholder="e.g. 6.8">
 
-        <label>Hand Grip (kg)</label>
+        <label>Forza della stretta (kg)</label>
         <input type="number" name="Hand_Grip" step="0.1" placeholder="e.g. 28">
 
         <label>rs174537</label>
@@ -101,7 +101,7 @@
         <input type="number" name="SCAT" step="0.1" placeholder="e.g. 12.3">
 
         <div class="full">
-          <button type="submit" class="btn">Predict</button>
+          <button type="submit" class="btn">Predici</button>
         </div>
       </div>
     </form>
@@ -109,26 +109,26 @@
 
   <!-- FILE -->
   <div class="card">
-    <h2>Upload File</h2>
+    <h2>Carica File</h2>
     <p class="help">
-      Upload a CSV or Excel file. If it’s raw (recommended), we’ll preprocess and impute
-      automatically. If it’s already preprocessed to the model’s expected matrix, check the box.
+      Carica un file CSV con i dati dei pazienti. Assicurati che il file contenga
+      le intestazioni corrette come descritto nella documentazione.
     </p>
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <input type="hidden" name="form_type" value="upload">
       <div class="form-grid">
-        <label>Data file</label>
+        <label>File</label>
         {{ form.data_file }}
 
         <label class="checkbox">
           {{ form.already_preprocessed }}
-          <span>File is already preprocessed</span>
+          <span>Il file è già preprocessato.</span>
         </label>
         <div></div>
 
         <div class="full">
-          <button type="submit" class="btn">Predict from file</button>
+          <button type="submit" class="btn">Predici dal File</button>
         </div>
       </div>
       {% if messages %}

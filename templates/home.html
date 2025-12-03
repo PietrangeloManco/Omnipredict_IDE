@@ -2,8 +2,8 @@
 {% block content %}
 <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
   <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center;">
-    <h2 style="margin-bottom: 10px; color: #333; font-size: 28px;">Welcome to Omnipredict</h2>
-    <p style="color: #666; margin-bottom: 30px;">The Omnipredict Project aims to leverage advanced machine learning techniques to predict the likelihood of testing positive for sarcopenia.</p>
+    <h2 style="margin-bottom: 10px; color: #333; font-size: 28px;">Benvenuto in Omnipredict</h2>
+    <p style="color: #666; margin-bottom: 30px;">Il Progetto Omnipredict mira a sfruttare tecniche avanzate di machine learning per prevedere la probabilità di risultare positivi alla sarcopenia.</p>
 
     <form method="POST" action="{% url 'login' %}" style="text-align: left;">
       {% csrf_token %}
@@ -24,7 +24,7 @@
 
     <div style="margin-top: 20px;">
       <a href="{% url 'signup' %}" style="color: #223166; text-decoration: none; font-size: 16px;">
-        Don't have an account? Sign up
+        Non hai un account? Registrati qui.
       </a>
     </div>
   </div>

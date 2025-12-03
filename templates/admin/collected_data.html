@@ -9,10 +9,10 @@
 </div>
 
 <form method="get" style="margin-bottom:12px;">
-  <label>Rows per page:</label>
+  <label>Righe per pagina:</label>
   <input type="number" name="per_page" value="{{ per_page }}" min="10" max="1000" style="width:90px;">
   <input type="hidden" name="page" value="1">
-  <button class="button default" type="submit">Apply</button>
+  <button class="button default" type="submit">Applica</button>
 </form>
 
 <div style="
@@ -41,7 +41,7 @@
           {% endfor %}
         </tr>
       {% empty %}
-        <tr><td colspan="{{ headers|length }}" style="padding:12px;">No data.</td></tr>
+        <tr><td colspan="{{ headers|length }}" style="padding:12px;">Non ci sono dati.</td></tr>
       {% endfor %}
     </tbody>
   </table>
@@ -49,15 +49,15 @@
 
 <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
   {% if has_prev %}
-    <a class="button" href="{{ prev_qs }}">Previous</a>
+    <a class="button" href="{{ prev_qs }}">Precedente</a>
   {% else %}
-    <a class="button" style="pointer-events:none; opacity:.5;">Previous</a>
+    <a class="button" style="pointer-events:none; opacity:.5;">Precedente</a>
   {% endif %}
 
   {% if has_next %}
-    <a class="button" href="{{ next_qs }}">Next</a>
+    <a class="button" href="{{ next_qs }}">Successivo</a>
   {% else %}
-    <a class="button" style="pointer-events:none; opacity:.5;">Next</a>
+    <a class="button" style="pointer-events:none; opacity:.5;">Successivo</a>
   {% endif %}
 </div>
 

@@ -2,18 +2,18 @@
 {% block content %}
 <div style="display: flex; justify-content: center; align-items: center; min-height: 60vh;">
   <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center;">
-    <h2 style="margin-bottom: 30px; color: #333; font-size: 28px;">Prediction Result</h2>
+    <h2 style="margin-bottom: 30px; color: #333; font-size: 28px;">Risultato della Predizione</h2>
 
     <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 30px; border-left: 5px solid #007bff;">
       <div style="margin-bottom: 20px;">
-        <label style="display: block; color: #666; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Status</label>
+        <label style="display: block; color: #666; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Stato</label>
         <span style="font-size: 24px; font-weight: bold;">
           {{ p.result }}
         </span>
       </div>
 
       <div style="margin-bottom: 20px;">
-        <label style="display: block; color: #666; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Probability of positivity</label>
+        <label style="display: block; color: #666; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Probabilità di positività</label>
         <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
           <span style="font-size: 32px; font-weight: bold; color: #333;">{{ p.probability|floatformat:2 }}%</span>
           <div style="background: #e9ecef; height: 8px; border-radius: 4px; margin-top: 10px; overflow: hidden;">
@@ -23,17 +23,17 @@
       </div>
 
       <div>
-        <label style="display: block; color: #666; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Analysis Date</label>
+        <label style="display: block; color: #666; font-size: 14px; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;">Data di Analisi</label>
         <span style="color: #333; font-size: 16px;">{{ p.uploaded_at|date:"F d, Y at g:i A" }}</span>
       </div>
     </div>
 
     <div style="display: flex; gap: 15px; justify-content: center;">
       <a href="{% url 'upload' %}" style="background: #223166; color: white; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; font-weight: 500; box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3); transition: transform 0.2s;">
-        Analyze Another File
+        Analizza un altro File
       </a>
       <button onclick="window.print()" style="background: #6c757d; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: 500; box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);">
-        Print Result
+        Stampa Risultato
       </button>
     </div>
   </div>
