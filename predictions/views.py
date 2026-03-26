@@ -1,38 +1,35 @@
 import json
-import numpy as np
-import pandas as pd
-import joblib
+import logging
 from pathlib import Path
 
+import joblib
+import numpy as np
+import pandas as pd
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import UploadForm, ManualPredictForm
+from .forms import ManualPredictForm, UploadForm
 from .models import PatientPrediction
-import logging
 
 logger = logging.getLogger(__name__)
 
 # ---- Load artifacts ----
 MODEL_DIR = Path(settings.BASE_DIR) / "models"
-PIPE = joblib.load(MODEL_DIR / "best_pipeline.pkl")   # full pipeline (preprocess + select + clf)
+PIPE = None
+CLASSIFIER_ONLY = None
+RAW_FEATURE_COLUMNS = None
 
-# Optional: keep classifier-only to support "already preprocessed" files exactly like before.
-try:
-    CLASSIFIER_ONLY = joblib.load(MODEL_DIR / "best_model.pkl")
-except Exception:
-    CLASSIFIER_ONLY = None  # if you don't have it, users should upload RAW
 
-# Try to get the raw feature columns from a json; else introspect the pipeline
-def _get_raw_feature_columns():
+def _get_raw_feature_columns(pipe):
     json_path = MODEL_DIR / "feature_columns.json"
     if json_path.exists():
-        with open(json_path) as f:
+        with open(json_path, encoding="utf-8") as f:
             return list(json.load(f))
+
     # Extract from ColumnTransformer inside pipeline
-    pre = PIPE.named_steps.get("pre") or PIPE.named_steps.get("preprocessor")
+    pre = pipe.named_steps.get("pre") or pipe.named_steps.get("preprocessor")
     cols = []
     if hasattr(pre, "transformers_"):
         for name, _, col_names in pre.transformers_:
@@ -42,7 +39,25 @@ def _get_raw_feature_columns():
                 cols.extend([str(c) for c in col_names])
     return cols
 
-RAW_FEATURE_COLUMNS = _get_raw_feature_columns()
+
+def _ensure_artifacts_loaded():
+    global PIPE, CLASSIFIER_ONLY, RAW_FEATURE_COLUMNS
+
+    if PIPE is not None and RAW_FEATURE_COLUMNS is not None:
+        return
+
+    pipe = joblib.load(MODEL_DIR / "best_pipeline.pkl")
+
+    # Optional: keep classifier-only to support "already preprocessed" files exactly like before.
+    try:
+        classifier_only = joblib.load(MODEL_DIR / "best_model.pkl")
+    except Exception:
+        classifier_only = None  # if you don't have it, users should upload RAW
+
+    PIPE = pipe
+    CLASSIFIER_ONLY = classifier_only
+    RAW_FEATURE_COLUMNS = _get_raw_feature_columns(pipe)
+
 
 # 10 fields exposed in the manual form
 DEMO_INPUT_COLUMNS = [
@@ -52,6 +67,7 @@ DEMO_INPUT_COLUMNS = [
 
 
 def _align_raw_row(row_dict: dict) -> pd.DataFrame:
+    _ensure_artifacts_loaded()
     row = {col: np.nan for col in RAW_FEATURE_COLUMNS}
 
     # ----- Fix gender -----
@@ -79,12 +95,15 @@ def _align_raw_row(row_dict: dict) -> pd.DataFrame:
 
 
 def _predict_with_pipeline_from_raw(row_dict: dict):
+    _ensure_artifacts_loaded()
     df = _align_raw_row(row_dict)
     proba = float(PIPE.predict_proba(df)[0, 1])
     label = "Positivo" if proba > 0.5 else "Negativo"
     return label, proba * 100.0
 
+
 def _predict_from_uploaded_file(file_obj, already_preprocessed: bool):
+    _ensure_artifacts_loaded()
     name = file_obj.name.lower()
     logger.info(f"Uploaded file: {name}, already_preprocessed={already_preprocessed}")
 
@@ -106,13 +125,17 @@ def _predict_from_uploaded_file(file_obj, already_preprocessed: bool):
         label = "Positive" if proba > 0.5 else "Negative"
         return label, proba * 100.0
 
-    # RAW data → pipeline
+    # RAW data -> pipeline
     row0 = df.iloc[0].to_dict()
     return _predict_with_pipeline_from_raw(row0)
 
+
 @login_required
 def upload_and_predict(request):
-    print(f"DEBUG VIEW: user={request.user}, is_staff={request.user.is_staff}, is_authenticated={request.user.is_authenticated}")
+    print(
+        f"DEBUG VIEW: user={request.user}, is_staff={request.user.is_staff}, "
+        f"is_authenticated={request.user.is_authenticated}"
+    )
     if request.method == "POST":
         # If a file field present or the checkbox posted, use the file path
         if request.FILES.get("data_file") or ("already_preprocessed" in request.POST):
@@ -169,6 +192,7 @@ def upload_and_predict(request):
         "manual_form": manual_form
     })
 
+
 @login_required
 def prediction_detail(request, pk):
     prediction = get_object_or_404(PatientPrediction, pk=pk, user=request.user)
@@ -177,4 +201,3 @@ def prediction_detail(request, pk):
 
 def home(request):
     return render(request, "home.html")
-
