@@ -16,14 +16,17 @@ from .models import PatientPrediction
 logger = logging.getLogger(__name__)
 
 # ---- Load artifacts ----
-MODEL_DIR = Path(settings.BASE_DIR) / "models"
+MODEL_DIR = Path(getattr(settings, "MODEL_DIR", Path(settings.BASE_DIR) / "models"))
+FEATURE_COLUMNS_JSON = Path(
+    getattr(settings, "FEATURE_COLUMNS_JSON", MODEL_DIR / "feature_columns.json")
+)
 PIPE = None
 CLASSIFIER_ONLY = None
 RAW_FEATURE_COLUMNS = None
 
 
 def _get_raw_feature_columns(pipe):
-    json_path = MODEL_DIR / "feature_columns.json"
+    json_path = FEATURE_COLUMNS_JSON
     if json_path.exists():
         with open(json_path, encoding="utf-8") as f:
             return list(json.load(f))
@@ -46,7 +49,14 @@ def _ensure_artifacts_loaded():
     if PIPE is not None and RAW_FEATURE_COLUMNS is not None:
         return
 
-    pipe = joblib.load(MODEL_DIR / "best_pipeline.pkl")
+    pipeline_path = MODEL_DIR / "best_pipeline.pkl"
+    if not pipeline_path.exists():
+        raise FileNotFoundError(
+            "The Omnipredict model artifacts are not included in this public repository. "
+            "Provide the proprietary files in the configured model directory to enable inference."
+        )
+
+    pipe = joblib.load(pipeline_path)
 
     # Optional: keep classifier-only to support "already preprocessed" files exactly like before.
     try:

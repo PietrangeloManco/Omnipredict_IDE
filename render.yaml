@@ -10,4 +10,6 @@ services:
       - key: DJANGO_SETTINGS_MODULE
         value: omnipredict_ide.settings
       - key: SECRET_KEY
-        value: '***REMOVED***'
+        generateValue: true
+      - key: DEBUG
+        value: "False"

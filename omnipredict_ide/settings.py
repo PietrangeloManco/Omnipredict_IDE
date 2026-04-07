@@ -12,18 +12,46 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 
+
+def _split_env_list(*names: str) -> list[str]:
+    for name in names:
+        raw_value = os.getenv(name, "")
+        if raw_value:
+            return [item.strip() for item in raw_value.split(",") if item.strip()]
+    return []
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-COLLECTED_DATA_CSV = os.path.join(BASE_DIR, "data", "Omnipredict_data.csv")
+MODEL_DIR = Path(
+    os.getenv("OMNIPREDICT_MODEL_DIR", str(BASE_DIR / "models"))
+).resolve()
+FEATURE_COLUMNS_JSON = Path(
+    os.getenv(
+        "OMNIPREDICT_FEATURE_COLUMNS_JSON",
+        str(MODEL_DIR / "feature_columns.json"),
+    )
+).resolve()
+COLLECTED_DATA_CSV = os.getenv(
+    "OMNIPREDICT_COLLECTED_DATA_CSV",
+    os.path.join(BASE_DIR, "data", "Omnipredict_data.csv"),
+)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '***REMOVED***'
+SECRET_KEY = (
+    os.getenv("SECRET_KEY")
+    or os.getenv("DJANGO_SECRET_KEY")
+    or "change-me-before-production"
+)
+SECRET_KEY_FALLBACKS = _split_env_list(
+    "SECRET_KEY_FALLBACKS",
+    "DJANGO_SECRET_KEY_FALLBACKS",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ['omnipredict.it', 'www.omnipredict.it','omnipredict-ide.onrender.com', '127.0.0.1']
 
@@ -90,7 +118,7 @@ WSGI_APPLICATION = 'omnipredict_ide.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.getenv('OMNIPREDICT_DB_PATH', str(BASE_DIR / 'db.sqlite3')),
     }
 }
 

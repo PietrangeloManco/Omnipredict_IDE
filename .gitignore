@@ -7,3 +7,11 @@ db.sqlite3
 venv/
 .venv
 .venv/
+.idea/
+.vscode/
+models/
+uploads/
+data/Omnipredict_data.csv
+.env
+.env.*
+!.env.example
