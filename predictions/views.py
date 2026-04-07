@@ -9,6 +9,8 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 
 from .forms import ManualPredictForm, UploadForm
 from .models import PatientPrediction
@@ -23,6 +25,37 @@ FEATURE_COLUMNS_JSON = Path(
 PIPE = None
 CLASSIFIER_ONLY = None
 RAW_FEATURE_COLUMNS = None
+
+
+def _patch_legacy_sklearn_artifacts(obj, seen=None):
+    """Populate attrs expected by newer scikit-learn releases for old pickles."""
+    if seen is None:
+        seen = set()
+
+    obj_id = id(obj)
+    if obj_id in seen:
+        return
+    seen.add(obj_id)
+
+    if isinstance(obj, Pipeline) and not hasattr(obj, "transform_input"):
+        obj.transform_input = None
+
+    if (
+        isinstance(obj, SimpleImputer)
+        and not hasattr(obj, "_fill_dtype")
+        and hasattr(obj, "_fit_dtype")
+    ):
+        obj._fill_dtype = obj._fit_dtype
+
+    named_steps = getattr(obj, "named_steps", None)
+    if named_steps:
+        for child in named_steps.values():
+            _patch_legacy_sklearn_artifacts(child, seen)
+
+    transformers = getattr(obj, "transformers_", None)
+    if transformers:
+        for _, child, _ in transformers:
+            _patch_legacy_sklearn_artifacts(child, seen)
 
 
 def _get_raw_feature_columns(pipe):
@@ -57,10 +90,12 @@ def _ensure_artifacts_loaded():
         )
 
     pipe = joblib.load(pipeline_path)
+    _patch_legacy_sklearn_artifacts(pipe)
 
     # Optional: keep classifier-only to support "already preprocessed" files exactly like before.
     try:
         classifier_only = joblib.load(MODEL_DIR / "best_model.pkl")
+        _patch_legacy_sklearn_artifacts(classifier_only)
     except Exception:
         classifier_only = None  # if you don't have it, users should upload RAW
 
@@ -142,10 +177,6 @@ def _predict_from_uploaded_file(file_obj, already_preprocessed: bool):
 
 @login_required
 def upload_and_predict(request):
-    print(
-        f"DEBUG VIEW: user={request.user}, is_staff={request.user.is_staff}, "
-        f"is_authenticated={request.user.is_authenticated}"
-    )
     if request.method == "POST":
         # If a file field present or the checkbox posted, use the file path
         if request.FILES.get("data_file") or ("already_preprocessed" in request.POST):
