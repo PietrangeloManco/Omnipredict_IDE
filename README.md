@@ -5,6 +5,7 @@ I built Omnipredict as the web platform for the OMNIPREDICT project, whose full 
 ## Links
 
 - Live platform: [https://omnipredict.it/](https://omnipredict.it/)
+- Public workflow notebook: [notebooks/Omnipredict_Public_Workflow.ipynb](notebooks/Omnipredict_Public_Workflow.ipynb)
 - Funding context: [AGE-IT Spoke 3 cascade call for enterprises](https://ageit.eu/wp/2024/08/07/spoke-3-pubblicato-il-secondo-bando-a-cascata-rivolto-alle-imprese/)
 - Public signup/login demo: anyone can create an account on the live website and explore the platform workflow directly.
 
@@ -58,4 +59,5 @@ On Windows, activate the environment with `.venv\\Scripts\\activate`.
 - The trained model artifacts are not distributed in this public repository because they are proprietary.
 - The raw project dataset is also omitted from the public repository because it contains sensitive project data.
 - If you want to run predictions locally, you need to provide the proprietary files expected under `models/`.
-- This repository is the web-facing part of the project: the training notebooks and technical reports document the modelling work in more detail, while this codebase focuses on deployment and usage.
+- The public notebook included in `notebooks/` is a publishable workflow summary only: it documents the project structure without exposing internal implementation details, proprietary feature engineering, or deploy-ready artifacts.
+- This repository is the web-facing part of the project: the training notebooks and technical reports document the modelling work at a high level, while this codebase focuses on deployment and usage.
