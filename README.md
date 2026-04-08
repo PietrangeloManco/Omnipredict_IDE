@@ -52,6 +52,20 @@ The public platform exposes the prediction workflow through a simple, guided int
 
 I am also adding screenshot previews to the repository so that the README shows the actual product flow more clearly.
 
+## Screenshots
+
+### Manual prediction
+
+![Omnipredict manual prediction](assets/screenshots/manual-prediction.png)
+
+### CSV upload flow
+
+![Omnipredict file upload](assets/screenshots/file-upload.png)
+
+### Result view
+
+![Omnipredict prediction result](assets/screenshots/prediction-result.png)
+
 ## Local Setup
 
 ```bash
