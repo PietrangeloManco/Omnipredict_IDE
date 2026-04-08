@@ -42,6 +42,16 @@ This repository contains the deployed Django platform around the classifier work
 - saved prediction history,
 - deployment configuration for the hosted platform.
 
+## Interface Highlights
+
+The public platform exposes the prediction workflow through a simple, guided interface. The main publishable views are:
+
+- a manual prediction form for direct sarcopenia-risk evaluation from the supported variables,
+- a CSV-based upload flow for batch-style usage,
+- a result page that returns classification outcome and risk score in a user-friendly format.
+
+I am also adding screenshot previews to the repository so that the README shows the actual product flow more clearly.
+
 ## Local Setup
 
 ```bash
