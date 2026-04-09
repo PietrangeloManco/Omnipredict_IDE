@@ -5,8 +5,8 @@
 Web platform for the Omnipredict project, focused on early sarcopenia prediction through a production-ready prediction workflow.
 
 <p>
-  <a href="https://omnipredict.it/">Live Platform</a> ·
-  <a href="notebooks/Omnipredict_Public_Workflow.ipynb">Public Workflow Notebook</a> ·
+  <a href="https://omnipredict.it/">Live Platform</a> |
+  <a href="notebooks/Omnipredict_Public_Workflow.ipynb">Public Workflow Notebook</a> |
   <a href="https://ageit.eu/wp/2024/08/07/spoke-3-pubblicato-il-secondo-bando-a-cascata-rivolto-alle-imprese/">Funding Context</a>
 </p>
 
@@ -23,17 +23,17 @@ Web platform for the Omnipredict project, focused on early sarcopenia prediction
 
 I built Omnipredict as the web platform for the OMNIPREDICT project, whose full name is *Omics and Non-invasive Integration for Predictive Health Assessment*. The goal of the project is the early detection of sarcopenia through the integration of clinical, functional, biochemical, and genomic data.
 
-The repository is the deployment-facing layer of the project: it exposes the predictive workflow through a usable interface and supports both single-patient and file-based usage.
+This repository is the deployment-facing layer of the project: it exposes the predictive workflow through a usable interface and supports both single-patient and file-based usage.
 
 ## Project context
 
 I built Omnipredict around a sarcopenia use case targeting older patients with multimorbidity. The project combines:
 
-- body-composition measurements,
-- functional indicators such as hand-grip strength,
-- lipidomic profiling,
-- selected SNPs,
-- protein markers such as BAG3 and Sortilin.
+- body-composition measurements
+- functional indicators such as hand-grip strength
+- lipidomic profiling
+- selected SNPs
+- protein markers such as BAG3 and Sortilin
 
 ## Modelling direction
 
@@ -41,40 +41,44 @@ The project initially started from the idea of a deep-learning-heavy classifier.
 
 The modelling workflow therefore focused on:
 
-- structured preprocessing,
-- clinically meaningful feature engineering,
-- comparison of multiple tree-based models,
-- selection of XGBoost as the most suitable primary direction,
-- retention of additional baselines for comparison.
+- structured preprocessing
+- clinically meaningful feature engineering
+- comparison of multiple tree-based models
+- selection of XGBoost as the most suitable primary direction
+- retention of additional baselines for comparison
 
 ## Product highlights
 
 The public platform exposes the prediction flow through a simple, guided interface:
 
-- a manual prediction form for direct risk evaluation,
-- a CSV-based upload flow for batch-style usage,
-- a result page that returns classification outcome and risk score in a user-friendly format,
-- account-based access so that the live product can be explored directly.
+- a manual prediction form for direct risk evaluation
+- a CSV-based upload flow for batch-style usage
+- a result page that returns classification outcome and risk score in a user-friendly format
+- account-based access so that the live product can be explored directly
 
 ## Screenshots
 
 <table>
   <tr>
+    <th align="center" width="34%">1. Manual entry</th>
+    <th align="center" width="33%">2. Batch upload</th>
+    <th align="center" width="33%">3. Output view</th>
+  </tr>
+  <tr>
     <td align="center" width="34%">
       <img src="assets/screenshots/manual-prediction.png" alt="Omnipredict manual prediction" width="100%" />
-      <br />
-      <sub><b>Manual prediction</b></sub>
     </td>
     <td align="center" width="33%">
       <img src="assets/screenshots/file-upload.png" alt="Omnipredict file upload" width="100%" />
-      <br />
-      <sub><b>CSV upload flow</b></sub>
     </td>
     <td align="center" width="33%">
       <img src="assets/screenshots/prediction-result.png" alt="Omnipredict prediction result" width="100%" />
-      <br />
-      <sub><b>Prediction result</b></sub>
     </td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Manual prediction form for single-patient evaluation.</sub></td>
+    <td align="center"><sub>CSV upload workflow for batch-style processing.</sub></td>
+    <td align="center"><sub>Result page with classification output and risk score.</sub></td>
   </tr>
 </table>
 
@@ -96,7 +100,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-On Windows, activate the environment with `.venv\\Scripts\\activate`.
+On Windows, activate the environment with `.venv\Scripts\activate`.
 
 ## Public release notes
 
