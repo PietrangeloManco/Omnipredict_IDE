@@ -104,13 +104,6 @@ def _ensure_artifacts_loaded():
     RAW_FEATURE_COLUMNS = _get_raw_feature_columns(pipe)
 
 
-# 10 fields exposed in the manual form
-DEMO_INPUT_COLUMNS = [
-    "gender", "bmi", "Omega3_Index", "Hand_Grip",
-    "rs174537", "rs174626", "SCAT"
-]
-
-
 def _align_raw_row(row_dict: dict) -> pd.DataFrame:
     _ensure_artifacts_loaded()
     row = {col: np.nan for col in RAW_FEATURE_COLUMNS}

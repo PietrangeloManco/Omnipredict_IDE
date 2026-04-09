@@ -18,7 +18,6 @@ def _read_csv_page(path, page, per_page):
         total_rows = sum(1 for _ in f) - 1  # minus header
 
     start = (page - 1) * per_page
-    end = start + per_page
 
     with open(path, newline="", encoding="utf-8") as f:
         r = csv.reader(f)
